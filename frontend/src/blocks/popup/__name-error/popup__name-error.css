@@ -1,0 +1,7 @@
+.popup__name-error {
+  min-height: 45px;
+  height: 100%;
+  margin-bottom: -15px;
+  padding: 0;
+  margin-top: 5px;
+}

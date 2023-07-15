@@ -1,0 +1,10 @@
+.popup__box {
+  color: #000000;
+  position: relative;
+}
+@media (max-width: 320px) {
+  .popup__container  {
+    width: 238px;
+    padding: 25px 22px;
+  }
+}

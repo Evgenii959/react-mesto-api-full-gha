@@ -1,0 +1,14 @@
+.profile__block {
+  display: flex;
+  width: 100%;
+  margin: 22px 0 25px;
+  word-wrap: break-word;
+    position: relative;
+}
+@media (max-width: 650px) {
+  .profile__block {
+    max-width: 282px;
+    justify-content: end;
+    margin: 22.25px 0 0;
+  }
+}

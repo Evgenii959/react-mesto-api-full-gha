@@ -1,0 +1,6 @@
+.element__title-heart {
+  display: flex;
+  justify-content: space-between;
+  max-width: 246px;
+  margin: 20px 21px;
+}

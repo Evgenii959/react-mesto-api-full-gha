@@ -1,0 +1,11 @@
+::placeholder {color: #cccccc;}
+.login__email {
+  background-color: black;
+  border: 0;
+  border-bottom: 2px solid #cccccc;
+  padding-bottom: 13px;
+  color: #FFFFFF;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+}

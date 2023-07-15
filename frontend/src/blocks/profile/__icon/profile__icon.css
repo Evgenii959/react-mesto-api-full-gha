@@ -1,0 +1,23 @@
+.profile__icon {
+  background-image: url(../../../images/Vector.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  box-sizing: border-box;
+  width: 100%;
+  border: solid #FFFFFF 1px;
+  max-width: 24px;
+  max-height: 24px;
+  margin: 15px 0 0 0;
+  background-color: transparent;
+}
+.profile__icon:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+@media (max-width: 650px) {
+  .profile__icon {
+    max-width: 18px;
+    max-height: 18px;
+    margin: 8px 19px 0 10px;
+  }
+}
