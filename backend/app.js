@@ -17,9 +17,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: 'https://ecgeny.nomoredomains.xyz',
     credentials: true,
-  })
+  }),
 );
 app.use(express.json());
 app.use(cookieParser());
