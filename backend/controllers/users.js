@@ -8,6 +8,8 @@ const Error409 = require('../errors/error409');
 const { codeMessage, ERROR_CODES } = require('../errors/errors');
 const { errorHandler } = require('../middlewares/errorHandler');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const getUsers = (req, res, next) => User.find({})
   .then((users) => res.status(ERROR_CODES.OK).send(users))
   .catch(() => {
@@ -105,7 +107,11 @@ const login = async (req, res, next) => {
     if (!user || !bcrypt.compareSync(password, user.password)) {
       throw new Error401('Неправильная почта или пароль');
     }
-    const token = jwt.sign({ _id: user._id }, 'asdcqwcqwcdqwcq', { expiresIn: '7d' });
+    const token = jwt.sign(
+      { _id: user._id },
+      NODE_ENV === 'production' ? JWT_SECRET : 'asdcqwcqwcdqwcq',
+      { expiresIn: '7d' },
+    );
     res.cookie('jwt', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
     res.send({ message: codeMessage.succes });
   } catch (err) {
