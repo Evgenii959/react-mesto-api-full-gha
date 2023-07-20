@@ -6,14 +6,13 @@ const Error401 = require('../errors/error401');
 const Error404 = require('../errors/error404');
 const Error409 = require('../errors/error409');
 const { codeMessage, ERROR_CODES } = require('../errors/errors');
-const { errorHandler } = require('../middlewares/errorHandler');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const getUsers = (req, res, next) => User.find({})
   .then((users) => res.status(ERROR_CODES.OK).send(users))
-  .catch(() => {
-    next(errorHandler('Server Error'));
+  .catch((err) => {
+    next(err);
   });
 
 const getUserById = (req, res, next) => {
@@ -30,7 +29,7 @@ const getUserById = (req, res, next) => {
       if (error.name === 'CastError') {
         next(new Error400('false ID'));
       } else {
-        next(errorHandler('Server Error'));
+        next(error);
       }
     });
 };
@@ -75,7 +74,7 @@ const updateUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         next(new Error400('Переданы не корректные данные'));
       }
-      return next(errorHandler('Server Error'));
+      return next(err);
     });
 };
 
@@ -92,7 +91,7 @@ const updateAvatarUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         return next(new Error400('ValidationError'));
       }
-      return next(errorHandler('Server Error'));
+      return next(err);
     });
 };
 
