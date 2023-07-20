@@ -35,12 +35,6 @@ const cardValid = {
         'string.uri': 'Не допустимый URL',
       }),
   }),
-  [Segments.PARAMS]: Joi.object().keys({
-    id: Joi.string().hex().length(24).messages({
-      'string.empty': 'Строка не должна быть пустой',
-      'string.hex': 'Должно содержать 16 символов',
-    }),
-  }),
 };
 
 const cardValidId = {
