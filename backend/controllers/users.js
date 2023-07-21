@@ -55,9 +55,9 @@ const createUser = async (req, res, next) => {
   } catch (err) {
     if (err.code === 11000) {
       next(new Error409('Такой email уже существует'));
-      return;
+    } else {
+      next(err);
     }
-    next(err);
   }
 };
 
@@ -73,8 +73,9 @@ const updateUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new Error400('Переданы не корректные данные'));
+      } else {
+        next(err);
       }
-      return next(err);
     });
 };
 
@@ -100,7 +101,8 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select('+password');
     if (!user || !bcrypt.compareSync(password, user.password)) {
-      throw new Error401('Неправильная почта или пароль');
+      next(new Error401('Неправильная почта или пароль'));
+      return;
     }
     const token = jwt.sign(
       { _id: user._id },
@@ -118,7 +120,8 @@ const getCurentUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
-      throw new Error404('Пользователя не существует');
+      next(new Error404('Пользователя не существует'));
+      return;
     }
     res.send(user);
   } catch (err) {

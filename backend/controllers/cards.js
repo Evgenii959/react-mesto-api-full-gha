@@ -17,13 +17,15 @@ const createCards = async (req, res, next) => {
     const newCard = await Card.create({ name, link, owner: req.user._id });
     if (!newCard) {
       next(new Error404('Карточка не создана'));
+      return;
     }
     res.status(ERROR_CODES.CREATED).send(newCard);
   } catch (err) {
     if (err.name === 'ValidationError') {
       next(new Error400('ValidationError'));
+    } else {
+      next(err);
     }
-    next(err);
   }
 };
 
@@ -35,10 +37,12 @@ const deleteCard = async (req, res, next) => {
 
     if (!card) {
       next(new Error404('Нет карточки с таким id'));
+      return;
     }
 
     if (card.owner.toString() !== userId) {
       next(new Error403('У вас нет прав'));
+      return;
     }
 
     await Card.findByIdAndRemove(id);
@@ -64,11 +68,11 @@ const addLikeCard = (req, res, next) => {
       }
       return res.send(card);
     })
-    .catch((error) => {
-      if (error.name === 'CastError') {
+    .catch((err) => {
+      if (err.name === 'CastError') {
         next(new Error400('false ID'));
       } else {
-        next(error);
+        next(err);
       }
     });
 };
