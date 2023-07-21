@@ -7,6 +7,7 @@ const authMiddleware = (req, res, next) => {
   const token = req.cookies.jwt;
   if (!token) {
     next(new Error401('Токен не найден'));
+    return;
   }
   try {
     req.user = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'asdcqwcqwcdqwcq');
